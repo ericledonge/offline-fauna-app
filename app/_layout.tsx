@@ -12,6 +12,7 @@ import "react-native-reanimated";
 
 import { useColorScheme } from "@/components/useColorScheme";
 import { Providers } from "@/components/Providers";
+import { Header } from "../components/Header";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -51,7 +52,17 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Providers>
-        <Stack />
+        <Stack
+          screenOptions={{
+            header: ({ navigation }) => (
+              <Header
+                title={""}
+                showBackButton={navigation.canGoBack()}
+                onBackPress={navigation.goBack}
+              />
+            ),
+          }}
+        />
       </Providers>
     </ThemeProvider>
   );
