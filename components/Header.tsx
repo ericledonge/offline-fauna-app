@@ -2,13 +2,24 @@ import React from "react";
 import { Appbar } from "react-native-paper";
 import { StyleSheet, Image, View } from "react-native";
 
+import { useTheme } from "@/hooks/useTheme";
+
 interface HeaderProps {
   title: string;
+  showBackButton?: boolean;
+  onBackPress?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ title }) => {
+export const Header: React.FC<HeaderProps> = ({
+  title,
+  showBackButton,
+  onBackPress,
+}) => {
+  const { colors } = useTheme();
+
   return (
-    <Appbar.Header style={styles.header}>
+    <Appbar.Header style={[styles.header, { backgroundColor: colors.primary }]}>
+      {showBackButton && <Appbar.BackAction onPress={onBackPress} />}
       <View style={styles.logoContainer}>
         <Image
           source={require("../assets/images/logo-fyri.png")}
@@ -24,7 +35,6 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
 const styles = StyleSheet.create({
   header: {
     elevation: 0,
-    backgroundColor: "#1B4D3E",
   },
   logoContainer: {
     width: 60,
