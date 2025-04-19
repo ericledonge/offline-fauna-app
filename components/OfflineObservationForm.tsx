@@ -1,25 +1,44 @@
 import React, { useState } from "react";
-import { Platform, View } from "react-native";
+import { Platform, View, StyleSheet } from "react-native";
 import { TextInput, Button, Text, MD3Theme } from "react-native-paper";
-import { StyleSheet } from "react-native";
+import { v4 as uuidv4 } from "uuid";
 
 import { useTheme } from "@/hooks/useTheme";
-// import { observer } from 'mobx-react-lite';
-// import { useOfflineObservationStore } from '../../stores/helpers/useStores';
+import { useAddObservations } from "@/store/selectors";
+import { FaunaSelector, Fauna } from "./FaunaSelector";
+
+const FAUNA_LIST: Fauna[] = [
+  { id: "119f3086-c003-4b53-a625-460833aaf662", name: "Sanglier", icon: "🐗" },
+  { id: "146a0dae-b246-40f6-ac58-b1cad125c7d9", name: "Cerf", icon: "🦌" },
+  {
+    id: "8d08e666-982d-4cc3-92c2-e61696be5333",
+    name: "Renard roux",
+    icon: "🦊",
+  },
+  { id: "e3b1e2f8-1799-4c89-a8a5-d9f2aab1da2f", name: "Écureuil", icon: "🐿️" },
+];
 
 export const OfflineObservationForm = () => {
   const theme = useTheme();
-  const styles = createStyles(theme);
-  //   const store = useOfflineObservationStore();
 
-  const [faunaId, setFaunaId] = useState<number | null>(null);
+  const styles = createStyles(theme);
+
+  const addObservation = useAddObservations();
+
+  const [selectedFaunaId, setSelectedFaunaId] = useState<string | null>(null);
+
   const [description, setDescription] = useState("");
 
   const handleSubmit = () => {
-    if (faunaId && description.trim()) {
-      //   store.addObservation(faunaId, description);
+    if (selectedFaunaId && description.trim()) {
+      addObservation({
+        id: uuidv4(),
+        faunaId: selectedFaunaId,
+        description,
+        timestamp: Date.now(),
+      });
       setDescription("");
-      setFaunaId(null);
+      setSelectedFaunaId(null);
     }
   };
 
@@ -29,7 +48,11 @@ export const OfflineObservationForm = () => {
         Nouvelle Observation
       </Text>
 
-      {/* Sélecteur de Faune - à implémenter */}
+      <FaunaSelector
+        selectedFaunaId={selectedFaunaId}
+        onSelectFauna={setSelectedFaunaId}
+        faunaList={FAUNA_LIST}
+      />
 
       <TextInput
         label="Description"
@@ -44,7 +67,7 @@ export const OfflineObservationForm = () => {
       <Button
         mode="contained"
         onPress={handleSubmit}
-        // disabled={!faunaId || !description.trim() || !store.isOnline}
+        disabled={!selectedFaunaId || !description.trim()}
         style={styles.button}
       >
         Enregistrer
