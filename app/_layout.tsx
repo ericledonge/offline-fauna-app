@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Platform, StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View, useWindowDimensions } from "react-native";
 import { MD3Theme } from "react-native-paper";
 import { useFonts } from "expo-font";
 import { Stack, Slot } from "expo-router";
@@ -48,14 +48,24 @@ function RootLayoutNav() {
 
   const styles = createStyles(theme);
 
+  const { width } = useWindowDimensions();
+
+  const isSmallScreen = width < 768; // Breakpoint pour les tablettes
+
   if (Platform.OS === "web") {
     return (
       <Providers>
         <View style={styles.webContainer}>
-          <View style={styles.webSidebar}>
-            <Header />
+          {!isSmallScreen && (
+            <View style={styles.webSidebar}>
+              <Header />
+            </View>
+          )}
+          <View
+            style={[styles.webContent, isSmallScreen && styles.webContentFull]}
+          >
+            <Slot />
           </View>
-          <Slot />
         </View>
       </Providers>
     );
@@ -80,11 +90,6 @@ function RootLayoutNav() {
 
 const createStyles = (theme: MD3Theme) =>
   StyleSheet.create({
-    mobileContainer: {
-      flex: 1,
-      padding: 16,
-      backgroundColor: theme.colors.background,
-    },
     webContainer: {
       flex: 1,
       flexDirection: "row",
@@ -99,5 +104,13 @@ const createStyles = (theme: MD3Theme) =>
     webContent: {
       flex: 1,
       padding: 16,
+    },
+    webContentFull: {
+      width: "100%",
+    },
+    mobileContainer: {
+      flex: 1,
+      padding: 16,
+      backgroundColor: theme.colors.background,
     },
   });
