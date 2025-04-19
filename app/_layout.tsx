@@ -1,16 +1,11 @@
 import { useEffect } from "react";
+import { Platform } from "react-native";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Stack, Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
 import "react-native-reanimated";
 
-import { useColorScheme } from "@/components/useColorScheme";
 import { Providers } from "@/components/Providers";
 import { Header } from "../components/Header";
 
@@ -47,23 +42,28 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+  if (Platform.OS === "web") {
+    return (
+      <Providers>
+        <Header />
+        <Slot />
+      </Providers>
+    );
+  }
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Providers>
-        <Stack
-          screenOptions={{
-            header: ({ navigation }) => (
-              <Header
-                title={""}
-                showBackButton={navigation.canGoBack()}
-                onBackPress={navigation.goBack}
-              />
-            ),
-          }}
-        />
-      </Providers>
-    </ThemeProvider>
+    <Providers>
+      <Stack
+        screenOptions={{
+          header: ({ navigation }) => (
+            <Header
+              title={""}
+              showBackButton={navigation.canGoBack()}
+              onBackPress={navigation.goBack}
+            />
+          ),
+        }}
+      />
+    </Providers>
   );
 }

@@ -5,14 +5,14 @@ import { StyleSheet, Image, View } from "react-native";
 import { useTheme } from "@/hooks/useTheme";
 
 interface HeaderProps {
-  title: string;
+  title?: string;
   showBackButton?: boolean;
   onBackPress?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
-  title,
-  showBackButton,
+  title = "",
+  showBackButton = false,
   onBackPress,
 }) => {
   const { colors } = useTheme();
