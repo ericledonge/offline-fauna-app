@@ -1,22 +1,12 @@
 import React, { useState } from "react";
 import { Platform, View, StyleSheet } from "react-native";
 import { TextInput, Button, Text, MD3Theme } from "react-native-paper";
-import { v4 as uuidv4 } from "uuid";
+import { randomUUID } from "expo-crypto";
 
 import { useTheme } from "@/hooks/useTheme";
 import { useAddObservations } from "@/store/selectors";
-import { FaunaSelector, Fauna } from "./FaunaSelector";
-
-const FAUNA_LIST: Fauna[] = [
-  { id: "119f3086-c003-4b53-a625-460833aaf662", name: "Sanglier", icon: "🐗" },
-  { id: "146a0dae-b246-40f6-ac58-b1cad125c7d9", name: "Cerf", icon: "🦌" },
-  {
-    id: "8d08e666-982d-4cc3-92c2-e61696be5333",
-    name: "Renard roux",
-    icon: "🦊",
-  },
-  { id: "e3b1e2f8-1799-4c89-a8a5-d9f2aab1da2f", name: "Écureuil", icon: "🐿️" },
-];
+import { FaunaSelector } from "./FaunaSelector";
+import { FAUNA_LIST } from "@/mocks/fauna-list";
 
 export const OfflineObservationForm = () => {
   const theme = useTheme();
@@ -32,7 +22,7 @@ export const OfflineObservationForm = () => {
   const handleSubmit = () => {
     if (selectedFaunaId && description.trim()) {
       addObservation({
-        id: uuidv4(),
+        id: randomUUID(),
         faunaId: selectedFaunaId,
         description,
         timestamp: Date.now(),
