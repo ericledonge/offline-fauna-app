@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { Platform } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
+import { MD3Theme } from "react-native-paper";
 import { useFonts } from "expo-font";
 import { Stack, Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -8,6 +9,7 @@ import "react-native-reanimated";
 
 import { Providers } from "@/components/Providers";
 import { Header } from "../components/Header";
+import { useTheme } from "@/hooks/useTheme";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -42,11 +44,19 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
+  const theme = useTheme();
+
+  const styles = createStyles(theme);
+
   if (Platform.OS === "web") {
     return (
       <Providers>
-        <Header />
-        <Slot />
+        <View style={styles.webContainer}>
+          <View style={styles.webSidebar}>
+            <Header />
+          </View>
+          <Slot />
+        </View>
       </Providers>
     );
   }
@@ -67,3 +77,27 @@ function RootLayoutNav() {
     </Providers>
   );
 }
+
+const createStyles = (theme: MD3Theme) =>
+  StyleSheet.create({
+    mobileContainer: {
+      flex: 1,
+      padding: 16,
+      backgroundColor: theme.colors.background,
+    },
+    webContainer: {
+      flex: 1,
+      flexDirection: "row",
+      backgroundColor: theme.colors.background,
+    },
+    webSidebar: {
+      width: 300,
+      borderRightWidth: 1,
+      borderRightColor: theme.colors.outlineVariant,
+      padding: 16,
+    },
+    webContent: {
+      flex: 1,
+      padding: 16,
+    },
+  });
