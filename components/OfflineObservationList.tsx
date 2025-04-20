@@ -1,43 +1,23 @@
 import { View, StyleSheet, FlatList, Platform } from "react-native";
-import { Text, useTheme, Card, IconButton } from "react-native-paper";
+import { Text, useTheme, Card, IconButton, MD3Theme } from "react-native-paper";
 
-// Temporary type for demonstration
-type Observation = {
-  id: string;
-  faunaId: number;
-  description: string;
-  date: string;
-  status: "synced" | "pending";
-};
-
-// Temporary mock data
-const mockObservations: Observation[] = [
-  {
-    id: "1",
-    faunaId: 1,
-    description: "Observation test 1",
-    date: "2024-04-19",
-    status: "synced",
-  },
-  {
-    id: "2",
-    faunaId: 2,
-    description: "Observation test 2",
-    date: "2024-04-19",
-    status: "pending",
-  },
-];
+import { OfflineObservation } from "@/models/offline-observation.model";
+import { useGetOfflineObservations } from "@/store/selectors";
 
 export const OfflineObservationList = () => {
   const theme = useTheme();
   const styles = createStyles(theme);
 
-  const renderItem = ({ item }: { item: Observation }) => (
+  const observations = useGetOfflineObservations();
+
+  const renderItem = ({ item }: { item: OfflineObservation }) => (
     <Card style={styles.card}>
       <Card.Content>
         <View style={styles.cardHeader}>
-          <Text variant="titleMedium">Observation #{item.faunaId}</Text>
-          {item.status === "pending" && (
+          <Text variant="bodyMedium" style={styles.description}>
+            {item.description}
+          </Text>
+          {!item.synced && (
             <IconButton
               icon="sync"
               size={20}
@@ -46,11 +26,9 @@ export const OfflineObservationList = () => {
             />
           )}
         </View>
-        <Text variant="bodyMedium" style={styles.description}>
-          {item.description}
-        </Text>
+
         <Text variant="bodySmall" style={styles.date}>
-          {item.date}
+          {new Date(item.timestamp).toLocaleString()}
         </Text>
       </Card.Content>
     </Card>
@@ -58,7 +36,7 @@ export const OfflineObservationList = () => {
 
   return (
     <FlatList
-      data={mockObservations}
+      data={observations}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
       contentContainerStyle={styles.list}
@@ -66,7 +44,7 @@ export const OfflineObservationList = () => {
   );
 };
 
-const createStyles = (theme: any) =>
+const createStyles = (theme: MD3Theme) =>
   StyleSheet.create({
     list: {
       padding: 16,
@@ -92,8 +70,7 @@ const createStyles = (theme: any) =>
     cardHeader: {
       flexDirection: "row",
       justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: 8,
+      alignItems: "baseline",
     },
     description: {
       marginBottom: 8,
@@ -101,5 +78,6 @@ const createStyles = (theme: any) =>
     },
     date: {
       color: theme.colors.onSurfaceVariant,
+      textAlign: "right",
     },
   });

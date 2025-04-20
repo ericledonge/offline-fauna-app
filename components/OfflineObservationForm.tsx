@@ -4,19 +4,20 @@ import { TextInput, Button, Text, MD3Theme } from "react-native-paper";
 import { randomUUID } from "expo-crypto";
 
 import { useTheme } from "@/hooks/useTheme";
-import { useAddObservations } from "@/store/selectors";
+import {
+  useAddObservations,
+  useGetOfflineObservations,
+} from "@/store/selectors";
 import { FaunaSelector } from "./FaunaSelector";
 import { FAUNA_LIST } from "@/mocks/fauna-list";
 
 export const OfflineObservationForm = () => {
   const theme = useTheme();
-
   const styles = createStyles(theme);
 
   const addObservation = useAddObservations();
 
   const [selectedFaunaId, setSelectedFaunaId] = useState<string | null>(null);
-
   const [description, setDescription] = useState("");
 
   const handleSubmit = () => {
