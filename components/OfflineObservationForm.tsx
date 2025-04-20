@@ -4,10 +4,7 @@ import { TextInput, Button, Text, MD3Theme } from "react-native-paper";
 import { randomUUID } from "expo-crypto";
 
 import { useTheme } from "@/hooks/useTheme";
-import {
-  useAddObservations,
-  useGetOfflineObservations,
-} from "@/store/selectors";
+import { useAddObservations } from "@/store/selectors";
 import { FaunaSelector } from "./FaunaSelector";
 import { FAUNA_LIST } from "@/mocks/fauna-list";
 
