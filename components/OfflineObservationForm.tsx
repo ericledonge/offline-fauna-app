@@ -5,14 +5,15 @@ import { randomUUID } from "expo-crypto";
 
 import { useTheme } from "@/hooks/useTheme";
 import { useAddObservations } from "@/store/selectors";
+import { useGetFaunaList } from "@/store/selectors";
 import { FaunaSelector } from "./FaunaSelector";
-import { FAUNA_LIST } from "@/mocks/fauna-list";
 
 export const OfflineObservationForm = () => {
   const theme = useTheme();
   const styles = createStyles(theme);
 
   const addObservation = useAddObservations();
+  const faunaList = useGetFaunaList();
 
   const [selectedFaunaId, setSelectedFaunaId] = useState<string | null>(null);
   const [description, setDescription] = useState("");
@@ -39,7 +40,7 @@ export const OfflineObservationForm = () => {
       <FaunaSelector
         selectedFaunaId={selectedFaunaId}
         onSelectFauna={setSelectedFaunaId}
-        faunaList={FAUNA_LIST}
+        faunaList={faunaList}
       />
 
       <TextInput

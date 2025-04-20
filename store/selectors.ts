@@ -8,3 +8,9 @@ export const useAddObservations = () =>
 
 export const useRemoveObservations = () =>
   useOfflineObservationStore((state) => state.removeObservation);
+
+export const useGetFaunaList = () =>
+  useOfflineObservationStore((state) => state.faunaList);
+
+export const useSetFaunaList = () =>
+  useOfflineObservationStore((state) => state.setFaunaList);

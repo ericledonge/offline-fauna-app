@@ -10,6 +10,7 @@ import "react-native-reanimated";
 import { Providers } from "@/components/Providers";
 import { Header } from "../components/Header";
 import { useTheme } from "@/hooks/useTheme";
+import { useGetFauna } from "@/hooks/useGetFauna";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -35,6 +36,9 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
     }
   }, [loaded]);
+
+  // Load fauna data
+  useGetFauna();
 
   if (!loaded) {
     return null;

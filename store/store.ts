@@ -1,39 +1,31 @@
 import { Platform } from "react-native";
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
+import { persist, createJSONStorage, PersistStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { OfflineObservation } from "../models/offline-observation.model";
+import {
+  createObservationSlice,
+  ObservationSlice,
+} from "./observations/observations.store";
+import { createFaunaSlice, FaunaSlice } from "./fauna/fauna.store";
 
-type OfflineObservationStore = {
-  observations: OfflineObservation[];
-  addObservation: (observation: OfflineObservation) => void;
-  removeObservation: (observation: OfflineObservation) => void;
-};
-
-const storage = Platform.select({
+const storage: PersistStorage<ObservationSlice & FaunaSlice> = Platform.select({
   web: createJSONStorage(() => localStorage),
   default: createJSONStorage(() => AsyncStorage),
-});
+}) as PersistStorage<ObservationSlice & FaunaSlice>;
+
+export type OfflineObservationStore = ObservationSlice & FaunaSlice;
 
 export const useOfflineObservationStore = create<OfflineObservationStore>()(
-  persist(
-    (set) => ({
-      observations: [],
-      addObservation: (observation: OfflineObservation) =>
-        set((state) => ({
-          observations: [...state.observations, observation],
-        })),
-      removeObservation: (observation: OfflineObservation) =>
-        set((state) => ({
-          observations: state.observations.filter(
-            (o) => o.id !== observation.id
-          ),
-        })),
+  persist<OfflineObservationStore>(
+    (set, get) => ({
+      ...createObservationSlice(set, get),
+      ...createFaunaSlice(set, get),
     }),
     {
-      name: "offline-observations",
+      name: "OFFLINE_OBSERVATIONS",
       storage,
+      version: 1,
     }
   )
 );
