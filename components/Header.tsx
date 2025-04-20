@@ -3,6 +3,7 @@ import { Appbar } from "react-native-paper";
 import { StyleSheet, Image, View } from "react-native";
 
 import { useTheme } from "@/hooks/useTheme";
+import { Connection } from "./Connection";
 
 interface HeaderProps {
   title?: string;
@@ -28,6 +29,7 @@ export const Header: React.FC<HeaderProps> = ({
         />
       </View>
       <Appbar.Content title={title} />
+      <Connection />
     </Appbar.Header>
   );
 };
