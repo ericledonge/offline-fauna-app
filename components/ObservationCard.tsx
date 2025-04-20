@@ -1,5 +1,6 @@
 import { View, StyleSheet, Platform } from "react-native";
-import { Text, useTheme, Card, IconButton, MD3Theme } from "react-native-paper";
+import { Text, useTheme, Card, MD3Theme } from "react-native-paper";
+import { RefreshCw, RefreshCwOff } from "lucide-react-native";
 
 import { OfflineObservation } from "@/models/offline-observation.model";
 import { useGetFaunaList } from "@/store/selectors";
@@ -30,17 +31,18 @@ export const ObservationCard = ({ observation }: ObservationCardProps) => {
             <Text variant="bodySmall" style={styles.date}>
               {new Date(observation.timestamp).toLocaleString()}
             </Text>
+            {observation.syncError && (
+              <Text variant="bodySmall" style={styles.error}>
+                {observation.syncError}
+              </Text>
+            )}
           </View>
         </View>
 
-        {!observation.synced && (
-          <IconButton
-            icon="sync"
-            size={20}
-            iconColor={theme.colors.primary}
-            onPress={() => {}}
-            style={styles.syncButton}
-          />
+        {!observation.synced ? (
+          <RefreshCwOff size={20} color={theme.colors.primary} />
+        ) : (
+          <RefreshCw size={20} color={theme.colors.primary} />
         )}
       </Card.Content>
     </Card>
@@ -102,9 +104,7 @@ const createStyles = (theme: MD3Theme) =>
     date: {
       color: theme.colors.onSurfaceVariant,
     },
-    syncButton: {
-      margin: 0,
-      marginTop: -8,
-      marginRight: -8,
+    error: {
+      color: theme.colors.error,
     },
   });

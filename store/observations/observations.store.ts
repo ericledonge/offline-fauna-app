@@ -8,6 +8,8 @@ export type ObservationSlice = {
   addObservation: (observation: OfflineObservation) => void;
   removeObservation: (observation: OfflineObservation) => void;
   clearObservations: () => void;
+  markSynced: (observationId: string) => void;
+  setSyncError: (observationId: string, error: string) => void;
 };
 
 export const createObservationSlice = (set: any, get: any) => ({
@@ -32,4 +34,18 @@ export const createObservationSlice = (set: any, get: any) => ({
       observations: [],
     }));
   },
+  markSynced: (observationId: string) =>
+    set((state: ObservationSlice) => ({
+      observations: state.observations.map((o: OfflineObservation) =>
+        o.id === observationId
+          ? { ...o, synced: true, syncError: undefined }
+          : o
+      ),
+    })),
+  setSyncError: (observationId: string, error: string) =>
+    set((state: ObservationSlice) => ({
+      observations: state.observations.map((o: OfflineObservation) =>
+        o.id === observationId ? { ...o, syncError: error } : o
+      ),
+    })),
 });

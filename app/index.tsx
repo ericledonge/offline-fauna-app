@@ -5,11 +5,19 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { OfflineObservationForm } from "@/components/OfflineObservationForm";
 import { OfflineObservationList } from "@/components/OfflineObservationList";
 import { useTheme } from "@/hooks/useTheme";
+import { useGetFauna } from "@/hooks/useGetFauna";
+import { useSyncObservations } from "@/hooks/useSyncObservations";
 
 export default function ObservationsScreen() {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
   const styles = createStyles(theme, insets);
+
+  // Load fauna data
+  useGetFauna();
+
+  // Enable automatic sync
+  useSyncObservations();
 
   return (
     <View style={styles.container}>

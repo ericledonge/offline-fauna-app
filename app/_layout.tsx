@@ -10,7 +10,6 @@ import "react-native-reanimated";
 import { Providers } from "@/components/Providers";
 import { Header } from "../components/Header";
 import { useTheme } from "@/hooks/useTheme";
-import { useGetFauna } from "@/hooks/useGetFauna";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -37,58 +36,52 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
-  // Load fauna data
-  useGetFauna();
-
   if (!loaded) {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <Providers>
+      <RootLayoutNav />
+    </Providers>
+  );
 }
 
 function RootLayoutNav() {
   const theme = useTheme();
-
   const styles = createStyles(theme);
-
   const { width } = useWindowDimensions();
-
   const isSmallScreen = width < 768; // Breakpoint pour les tablettes
 
   if (Platform.OS === "web") {
     return (
-      <Providers>
-        <View style={styles.webContainer}>
-          {!isSmallScreen && (
-            <View style={styles.webSidebar}>
-              <Header />
-            </View>
-          )}
-          <View
-            style={[styles.webContent, isSmallScreen && styles.webContentFull]}
-          >
-            <Slot />
+      <View style={styles.webContainer}>
+        {!isSmallScreen && (
+          <View style={styles.webSidebar}>
+            <Header />
           </View>
+        )}
+        <View
+          style={[styles.webContent, isSmallScreen && styles.webContentFull]}
+        >
+          <Slot />
         </View>
-      </Providers>
+      </View>
     );
   }
 
   return (
-    <Providers>
-      <Stack
-        screenOptions={{
-          header: ({ navigation }) => (
-            <Header
-              title={""}
-              showBackButton={navigation.canGoBack()}
-              onBackPress={navigation.goBack}
-            />
-          ),
-        }}
-      />
-    </Providers>
+    <Stack
+      screenOptions={{
+        header: ({ navigation }) => (
+          <Header
+            title={""}
+            showBackButton={navigation.canGoBack()}
+            onBackPress={navigation.goBack}
+          />
+        ),
+      }}
+    />
   );
 }
 
