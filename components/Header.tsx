@@ -1,9 +1,11 @@
 import React from "react";
 import { Appbar } from "react-native-paper";
 import { StyleSheet, Image, View } from "react-native";
+import { Trash } from "lucide-react-native";
 
 import { useTheme } from "@/hooks/useTheme";
 import { Connection } from "./Connection";
+import { useOfflineObservationStore } from "@/store/store";
 
 interface HeaderProps {
   title?: string;
@@ -17,6 +19,9 @@ export const Header: React.FC<HeaderProps> = ({
   onBackPress,
 }) => {
   const { colors } = useTheme();
+  const clearStorage = useOfflineObservationStore(
+    (state) => state.clearStorage
+  );
 
   return (
     <Appbar.Header style={[styles.header, { backgroundColor: colors.primary }]}>
@@ -29,6 +34,10 @@ export const Header: React.FC<HeaderProps> = ({
         />
       </View>
       <Appbar.Content title={title} />
+      <Appbar.Action
+        icon={() => <Trash color="red" />}
+        onPress={clearStorage}
+      />
       <Connection />
     </Appbar.Header>
   );
