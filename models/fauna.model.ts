@@ -3,3 +3,7 @@ export type Fauna = {
   name: string;
   icon: string;
 };
+
+export const getFaunaIcon = (fauna: Fauna) => {
+  return fauna.icon;
+};

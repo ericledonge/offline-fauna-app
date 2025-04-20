@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { Platform, View, StyleSheet } from "react-native";
 import { TextInput, Button, Text, MD3Theme } from "react-native-paper";
-import { randomUUID } from "expo-crypto";
+import { useNetworkState } from "expo-network";
 
 import { useTheme } from "@/hooks/useTheme";
 import { useAddObservations } from "@/store/selectors";
 import { useGetFaunaList } from "@/store/selectors";
 import { FaunaSelector } from "./FaunaSelector";
+import { generateId } from "@/utils/generateId";
 
 export const OfflineObservationForm = () => {
   const theme = useTheme();
   const styles = createStyles(theme);
+
+  const { isConnected } = useNetworkState();
 
   const addObservation = useAddObservations();
   const faunaList = useGetFaunaList();
@@ -21,7 +24,7 @@ export const OfflineObservationForm = () => {
   const handleSubmit = () => {
     if (selectedFaunaId && description.trim()) {
       addObservation({
-        id: randomUUID(),
+        id: generateId(),
         faunaId: selectedFaunaId,
         description,
         timestamp: Date.now(),
@@ -62,11 +65,12 @@ export const OfflineObservationForm = () => {
         Enregistrer
       </Button>
 
-      {/* {!store.isOnline && (
+      {!isConnected && (
         <Text style={styles.offlineNotice}>
-          Mode hors-ligne: Les observations seront synchronisées lorsque vous serez en ligne
+          Mode hors-ligne: Les observations seront synchronisées lorsque vous
+          serez en ligne
         </Text>
-      )} */}
+      )}
     </View>
   );
 };
@@ -111,3 +115,6 @@ const createStyles = (theme: MD3Theme) =>
       fontSize: 14,
     },
   });
+function useNetworkStatus(): { isOnline: any } {
+  throw new Error("Function not implemented.");
+}
