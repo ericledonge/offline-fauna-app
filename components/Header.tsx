@@ -19,8 +19,8 @@ export const Header: React.FC<HeaderProps> = ({
   onBackPress,
 }) => {
   const { colors } = useTheme();
-  const clearStorage = useOfflineObservationStore(
-    (state) => state.clearStorage
+  const clearObservations = useOfflineObservationStore(
+    (state) => state.clearObservations
   );
 
   return (
@@ -36,7 +36,7 @@ export const Header: React.FC<HeaderProps> = ({
       <Appbar.Content title={title} />
       <Appbar.Action
         icon={() => <Trash color="red" />}
-        onPress={clearStorage}
+        onPress={clearObservations}
       />
       <Connection />
     </Appbar.Header>

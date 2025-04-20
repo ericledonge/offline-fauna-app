@@ -9,10 +9,7 @@ import {
 } from "./observations/observations.store";
 import { createFaunaSlice, FaunaSlice } from "./fauna/fauna.store";
 
-export type OfflineObservationStore = ObservationSlice &
-  FaunaSlice & {
-    clearStorage: () => void;
-  };
+export type OfflineObservationStore = ObservationSlice & FaunaSlice;
 
 const storage = Platform.select({
   web: createJSONStorage(() => localStorage),
@@ -24,14 +21,6 @@ export const useOfflineObservationStore = create<OfflineObservationStore>()(
     (set, get) => ({
       ...createObservationSlice(set, get),
       ...createFaunaSlice(set, get),
-      clearStorage: () => {
-        if (Platform.OS === "web") {
-          localStorage.clear();
-        } else {
-          AsyncStorage.clear();
-        }
-        set({ observations: [], faunaList: [] });
-      },
     }),
     {
       name: "OFFLINE_OBSERVATIONS",
