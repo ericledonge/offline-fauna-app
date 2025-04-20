@@ -2,8 +2,7 @@ import { useEffect } from "react";
 
 import { useSetFaunaList } from "@/store/selectors";
 import { FAUNA_LIST } from "@/metadata/fauna-list";
-
-const API_URL = "https://offline-fauna-backend.vercel.app/api/graphql";
+import { API_URL } from "@/constants/api";
 
 export const useGetFauna = () => {
   const setFaunaList = useSetFaunaList();

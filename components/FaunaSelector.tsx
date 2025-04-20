@@ -17,7 +17,6 @@ export const FaunaSelector = ({
   faunaList,
 }: FaunaSelectorProps) => {
   const theme = useTheme();
-
   const styles = createStyles(theme);
 
   const [visible, setVisible] = useState(false);

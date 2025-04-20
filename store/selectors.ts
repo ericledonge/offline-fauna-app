@@ -20,3 +20,6 @@ export const useMarkSynced = () =>
 
 export const useSetSyncError = () =>
   useOfflineObservationStore((state) => state.setSyncError);
+
+export const useClearObservations = () =>
+  useOfflineObservationStore((state) => state.clearObservations);

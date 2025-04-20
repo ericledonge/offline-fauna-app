@@ -7,8 +7,11 @@ import { useMarkSynced, useSetSyncError } from "@/store/selectors";
 
 export function useSyncObservations() {
   const { isConnected } = useNetworkState();
+
   const observations = useGetOfflineObservations();
+
   const { mutate: syncObservation } = useSyncObservation();
+
   const markSynced = useMarkSynced();
   const setSyncError = useSetSyncError();
 

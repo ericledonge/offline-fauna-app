@@ -5,27 +5,19 @@ import { Trash } from "lucide-react-native";
 
 import { useTheme } from "@/hooks/useTheme";
 import { Connection } from "./Connection";
-import { useOfflineObservationStore } from "@/store/store";
+import { useClearObservations } from "@/store/selectors";
 
 interface HeaderProps {
   title?: string;
-  showBackButton?: boolean;
-  onBackPress?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({
-  title = "",
-  showBackButton = false,
-  onBackPress,
-}) => {
+export const Header: React.FC<HeaderProps> = ({ title = "" }) => {
   const { colors } = useTheme();
-  const clearObservations = useOfflineObservationStore(
-    (state) => state.clearObservations
-  );
+
+  const clearObservations = useClearObservations();
 
   return (
     <Appbar.Header style={[styles.header, { backgroundColor: colors.primary }]}>
-      {showBackButton && <Appbar.BackAction onPress={onBackPress} />}
       <View style={styles.logoContainer}>
         <Image
           source={require("../assets/images/logo-fyri.png")}

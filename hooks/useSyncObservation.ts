@@ -1,8 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 
 import { OfflineObservation } from "@/models/offline-observation.model";
-
-const API_URL = "https://offline-fauna-backend.vercel.app/api/graphql";
+import { API_URL } from "@/constants/api";
 
 async function syncObservation(observation: OfflineObservation) {
   const response = await fetch(API_URL, {

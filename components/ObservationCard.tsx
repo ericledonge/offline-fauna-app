@@ -1,9 +1,9 @@
 import { View, StyleSheet, Platform } from "react-native";
 import { Text, useTheme, Card, MD3Theme } from "react-native-paper";
-import { RefreshCw, RefreshCwOff } from "lucide-react-native";
 
 import { OfflineObservation } from "@/models/offline-observation.model";
 import { useGetFaunaList } from "@/store/selectors";
+import { SyncStatusIcon } from "./SyncStatusIcon";
 
 interface ObservationCardProps {
   observation: OfflineObservation;
@@ -24,21 +24,19 @@ export const ObservationCard = ({ observation }: ObservationCardProps) => {
               <Text style={styles.icon}>{fauna.icon}</Text>
             </View>
           )}
+
           <View style={styles.textContent}>
             <Text variant="titleMedium" style={styles.description}>
               {observation.description}
             </Text>
+
             <Text variant="bodySmall" style={styles.date}>
               {new Date(observation.timestamp).toLocaleString()}
             </Text>
           </View>
         </View>
 
-        {!observation.synced ? (
-          <RefreshCwOff size={20} color={theme.colors.primary} />
-        ) : (
-          <RefreshCw size={20} color={theme.colors.primary} />
-        )}
+        <SyncStatusIcon isSynced={!!observation.synced} />
       </Card.Content>
     </Card>
   );
