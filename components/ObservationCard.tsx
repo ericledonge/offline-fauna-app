@@ -31,11 +31,6 @@ export const ObservationCard = ({ observation }: ObservationCardProps) => {
             <Text variant="bodySmall" style={styles.date}>
               {new Date(observation.timestamp).toLocaleString()}
             </Text>
-            {observation.syncError && (
-              <Text variant="bodySmall" style={styles.error}>
-                {observation.syncError}
-              </Text>
-            )}
           </View>
         </View>
 
