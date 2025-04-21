@@ -1,6 +1,5 @@
 import { useEffect } from "react";
-import { Platform, StyleSheet, View, useWindowDimensions } from "react-native";
-import { MD3Theme } from "react-native-paper";
+import { Platform, View } from "react-native";
 import { useFonts } from "expo-font";
 import { Stack, Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -55,23 +54,18 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const theme = useTheme();
-  const styles = createStyles(theme);
-  const { width } = useWindowDimensions();
-  const isSmallScreen = width < 768; // Breakpoint pour les tablettes
 
   if (Platform.OS === "web") {
     return (
-      <View style={styles.webContainer}>
-        {!isSmallScreen && (
-          <View style={styles.webSidebar}>
-            <Header />
-          </View>
-        )}
-        <View
-          style={[styles.webContent, isSmallScreen && styles.webContentFull]}
-        >
-          <Slot />
-        </View>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: theme.colors.background,
+        }}
+      >
+        <Header />
+
+        <Slot />
       </View>
     );
   }
@@ -79,41 +73,8 @@ function RootLayoutNav() {
   return (
     <Stack
       screenOptions={{
-        header: ({ navigation }) => (
-          <Header
-            title={""}
-            showBackButton={navigation.canGoBack()}
-            onBackPress={navigation.goBack}
-          />
-        ),
+        header: () => <Header title={""} />,
       }}
     />
   );
 }
-
-const createStyles = (theme: MD3Theme) =>
-  StyleSheet.create({
-    webContainer: {
-      flex: 1,
-      flexDirection: "row",
-      backgroundColor: theme.colors.background,
-    },
-    webSidebar: {
-      width: 300,
-      borderRightWidth: 1,
-      borderRightColor: theme.colors.outlineVariant,
-      padding: 16,
-    },
-    webContent: {
-      flex: 1,
-      padding: 16,
-    },
-    webContentFull: {
-      width: "100%",
-    },
-    mobileContainer: {
-      flex: 1,
-      padding: 16,
-      backgroundColor: theme.colors.background,
-    },
-  });

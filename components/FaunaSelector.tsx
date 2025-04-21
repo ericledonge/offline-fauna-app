@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
-import { Text, MD3Theme, Menu, Button } from "react-native-paper";
+import { View } from "react-native";
+import { Menu, Button } from "react-native-paper";
 
 import { Fauna } from "@/models/fauna.model";
 import { useTheme } from "@/hooks/useTheme";
@@ -17,27 +17,18 @@ export const FaunaSelector = ({
   faunaList,
 }: FaunaSelectorProps) => {
   const theme = useTheme();
-  const styles = createStyles(theme);
 
   const [visible, setVisible] = useState(false);
 
   const selectedFauna = faunaList.find((fauna) => fauna.id === selectedFaunaId);
 
   return (
-    <View style={styles.container}>
-      <Text variant="labelMedium" style={styles.label}>
-        Espèce observée
-      </Text>
-
+    <View style={{}}>
       <Menu
         visible={visible}
         onDismiss={() => setVisible(false)}
         anchor={
-          <Button
-            mode="outlined"
-            onPress={() => setVisible(true)}
-            style={styles.button}
-          >
+          <Button mode="outlined" onPress={() => setVisible(true)} style={{}}>
             {selectedFauna
               ? `${selectedFauna.icon} ${selectedFauna.name}`
               : "Sélectionnez une espèce"}
@@ -58,17 +49,3 @@ export const FaunaSelector = ({
     </View>
   );
 };
-
-const createStyles = (theme: MD3Theme) =>
-  StyleSheet.create({
-    container: {
-      marginBottom: 16,
-    },
-    label: {
-      marginBottom: 4,
-      color: theme.colors.onSurfaceVariant,
-    },
-    button: {
-      backgroundColor: theme.colors.surfaceVariant,
-    },
-  });
