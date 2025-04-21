@@ -1,17 +1,20 @@
 import { View, StyleSheet, Platform } from "react-native";
-import { Text, useTheme, Card, MD3Theme } from "react-native-paper";
+import { Text, useTheme, Card, MD3Theme, IconButton } from "react-native-paper";
+import { Trash } from "lucide-react-native";
 
 import { Observation } from "@/models/observation.model";
-import { useGetFaunaList } from "@/store/selectors";
+import { useGetFaunaList, useRemoveObservations } from "@/store/selectors";
 import { SyncStatusIcon } from "./SyncStatusIcon";
 
-interface ObservationCardProps {
+type ObservationCardProps = {
   observation: Observation;
-}
+};
 
 export const ObservationCard = ({ observation }: ObservationCardProps) => {
   const theme = useTheme();
   const styles = createStyles(theme);
+
+  const removeObservation = useRemoveObservations();
 
   const fauna = useGetFaunaList().find((f) => f.id === observation.faunaId);
 
@@ -36,7 +39,15 @@ export const ObservationCard = ({ observation }: ObservationCardProps) => {
           </View>
         </View>
 
-        <SyncStatusIcon isSynced={!!observation.synced} />
+        <View style={styles.actionsContainer}>
+          <SyncStatusIcon isSynced={!!observation.synced} />
+
+          <IconButton
+            icon={() => <Trash color="red" size={20} />}
+            onPress={() => removeObservation(observation)}
+            style={styles.deleteButton}
+          />
+        </View>
       </Card.Content>
     </Card>
   );
@@ -96,5 +107,14 @@ const createStyles = (theme: MD3Theme) =>
     },
     error: {
       color: theme.colors.error,
+    },
+    actionsContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 4,
+    },
+    deleteButton: {
+      margin: 0,
+      padding: 0,
     },
   });
