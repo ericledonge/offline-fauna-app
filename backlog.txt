@@ -1,0 +1,9 @@
+- Suppression des observations
+- Filtrage des observations par état de synchronisation
+- Bouton de synchronisation (quand on est en ligne)
+- S'adapte à la fois au web et au mobile avec des rendus différents
+- Corriger les heures dans le backend
+
+* Notes
+
+Je n'ai pas utilisé MobX mais Zustand.
