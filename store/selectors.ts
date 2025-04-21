@@ -26,3 +26,6 @@ export const useClearObservations = () =>
 
 export const useGetUnsyncedObservations = () =>
   useObservationStore((state) => state.getUnsyncedObservations);
+
+export const useGetSyncedObservations = () =>
+  useObservationStore((state) => state.getSyncedObservations);
