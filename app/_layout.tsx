@@ -19,6 +19,12 @@ export {
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
+// Désactiver l'animation native sur web
+if (Platform.OS === "web") {
+  // @ts-ignore
+  global.useNativeDriver = false;
+}
+
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),

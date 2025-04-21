@@ -1,4 +1,4 @@
-export type OfflineObservation = {
+export type Observation = {
   id: string;
   faunaId: string;
   description: string;

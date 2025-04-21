@@ -1,12 +1,12 @@
 import { View, StyleSheet, Platform } from "react-native";
 import { Text, useTheme, Card, MD3Theme } from "react-native-paper";
 
-import { OfflineObservation } from "@/models/offline-observation.model";
+import { Observation } from "@/models/observation.model";
 import { useGetFaunaList } from "@/store/selectors";
 import { SyncStatusIcon } from "./SyncStatusIcon";
 
 interface ObservationCardProps {
-  observation: OfflineObservation;
+  observation: Observation;
 }
 
 export const ObservationCard = ({ observation }: ObservationCardProps) => {
@@ -49,10 +49,7 @@ const createStyles = (theme: MD3Theme) =>
       backgroundColor: theme.colors.surface,
       ...Platform.select({
         ios: {
-          shadowColor: theme.colors.shadow,
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.1,
-          shadowRadius: 4,
+          boxShadow: `0 2px 4px ${theme.colors.shadow}`,
         },
         android: {
           elevation: 2,

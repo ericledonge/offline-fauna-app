@@ -9,7 +9,7 @@ import { useGetFaunaList } from "@/store/selectors";
 import { FaunaSelector } from "./FaunaSelector";
 import { generateId } from "@/utils/generateId";
 
-export const OfflineObservationForm = () => {
+export const ObservationForm = () => {
   const theme = useTheme();
   const styles = createStyles(theme);
 
@@ -84,10 +84,7 @@ const createStyles = (theme: MD3Theme) =>
       marginBottom: 16,
       ...Platform.select({
         ios: {
-          shadowColor: theme.colors.shadow,
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.1,
-          shadowRadius: 4,
+          boxShadow: `0 2px 4px ${theme.colors.shadow}`,
         },
         android: {
           elevation: 2,
@@ -99,22 +96,16 @@ const createStyles = (theme: MD3Theme) =>
     },
     title: {
       marginBottom: 16,
-      color: theme.colors.onSurface,
     },
     input: {
       marginBottom: 16,
-      backgroundColor: theme.colors.surfaceVariant,
     },
     button: {
-      marginTop: 8,
+      marginBottom: 8,
     },
     offlineNotice: {
-      marginTop: 16,
-      color: theme.colors.error,
+      color: theme.colors.onSurfaceVariant,
       textAlign: "center",
-      fontSize: 14,
+      fontSize: 12,
     },
   });
-function useNetworkStatus(): { isOnline: any } {
-  throw new Error("Function not implemented.");
-}

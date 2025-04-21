@@ -1,14 +1,14 @@
 import { FlatList, StyleSheet } from "react-native";
 import { useTheme, MD3Theme } from "react-native-paper";
 
-import { useGetOfflineObservations } from "@/store/selectors";
+import { useGetObservations } from "@/store/selectors";
 import { ObservationCard } from "./ObservationCard";
 
-export const OfflineObservationList = () => {
+export const ObservationList = () => {
   const theme = useTheme();
   const styles = createStyles(theme);
 
-  const observations = useGetOfflineObservations();
+  const observations = useGetObservations();
 
   return (
     <FlatList

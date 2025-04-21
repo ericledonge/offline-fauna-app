@@ -31,6 +31,10 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 // Lien HTTP pour les requêtes
 const httpLink = new HttpLink({
   uri: API_URL,
+  credentials: "include",
+  fetchOptions: {
+    mode: "cors",
+  },
 });
 
 // Création du client Apollo
