@@ -6,4 +6,4 @@
 
 * Notes
 
-Je n'ai pas utilisé MobX mais Zustand.
+- Je n'ai pas utilisé MobX mais Zustand.

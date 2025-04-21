@@ -43,7 +43,7 @@ WebApp: https://offline-fauna-app--ncgcwtmhxu.expo.app/
 
 - **Frontend**: React Native with Expo
 - **State Management**: Zustand
-- **Server Data Management**: TanStack
+- **Server Data Management**: Apollo Client
 - **Type Safety**: TypeScript
 - **Navigation**: Expo Router
 - **UI Components**: React Native Paper
