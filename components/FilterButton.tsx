@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, Platform } from "react-native";
-import { Menu, Portal, useTheme } from "react-native-paper";
+import { View, Platform } from "react-native";
+import { Menu, Portal, useTheme, IconButton } from "react-native-paper";
 import { Funnel } from "lucide-react-native";
+import { StyleSheet } from "react-native";
 
 import { SyncStatusIcon } from "./SyncStatusIcon";
 
@@ -14,7 +15,6 @@ interface FilterButtonProps {
 
 export const FilterButton = ({ value, onChange }: FilterButtonProps) => {
   const theme = useTheme();
-
   const [visible, setVisible] = useState(false);
   const [menuAnchor, setMenuAnchor] = useState({ x: 0, y: 0 });
 
@@ -62,19 +62,13 @@ export const FilterButton = ({ value, onChange }: FilterButtonProps) => {
 
   return (
     <>
-      <TouchableOpacity
+      <IconButton
+        icon={() => <Funnel size={20} color={theme.colors.primary} />}
         onPress={handlePress}
         style={{
-          width: 40,
-          height: 40,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: theme.colors.surface,
-          borderRadius: 20,
+          backgroundColor: theme.colors.primaryContainer,
         }}
-      >
-        <Funnel size={20} color={theme.colors.primary} />
-      </TouchableOpacity>
+      />
       {Platform.OS === "web" ? menu : <Portal>{menu}</Portal>}
     </>
   );

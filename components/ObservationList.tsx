@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { FlatList, View } from "react-native";
-import { useTheme, Card, IconButton } from "react-native-paper";
-import { Trash } from "lucide-react-native";
+import { useTheme, Card } from "react-native-paper";
 
 import {
   useGetObservations,
@@ -11,6 +10,7 @@ import {
 } from "@/store/selectors";
 import { ObservationCard } from "./ObservationCard";
 import { FilterButton } from "./FilterButton";
+import { DeleteButton } from "./DeleteButton";
 
 export const ObservationList = () => {
   const theme = useTheme();
@@ -35,14 +35,14 @@ export const ObservationList = () => {
         title="Observations"
         titleVariant="titleMedium"
         right={() => (
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
             <FilterButton value={filter} onChange={setFilter} />
-            <IconButton
-              icon={() => <Trash color="red" size={20} />}
-              onPress={clearObservations}
-            />
+            <DeleteButton onPress={clearObservations} />
           </View>
         )}
+        style={{
+          padding: 16,
+        }}
       />
 
       <Card.Content>
@@ -50,7 +50,7 @@ export const ObservationList = () => {
           data={filteredObservations}
           renderItem={({ item }) => <ObservationCard observation={item} />}
           keyExtractor={(item) => item.id}
-          contentContainerStyle={{ padding: 16, gap: 8 }}
+          contentContainerStyle={{ padding: 8, gap: 8 }}
         />
       </Card.Content>
     </Card>

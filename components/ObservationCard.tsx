@@ -111,10 +111,11 @@ const createStyles = (theme: MD3Theme) =>
     actionsContainer: {
       flexDirection: "row",
       alignItems: "center",
-      gap: 4,
+      gap: 16,
     },
     deleteButton: {
       margin: 0,
       padding: 0,
+      backgroundColor: theme.colors.errorContainer,
     },
   });
