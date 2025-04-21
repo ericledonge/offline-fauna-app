@@ -1,11 +1,9 @@
 import React from "react";
 import { Appbar } from "react-native-paper";
-import { StyleSheet, Image, View } from "react-native";
-import { Trash } from "lucide-react-native";
+import { Image, View } from "react-native";
 
 import { useTheme } from "@/hooks/useTheme";
 import { Connection } from "./Connection";
-import { useClearObservations } from "@/store/selectors";
 
 interface HeaderProps {
   title?: string;
@@ -14,38 +12,17 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ title = "" }) => {
   const { colors } = useTheme();
 
-  const clearObservations = useClearObservations();
-
   return (
-    <Appbar.Header style={[styles.header, { backgroundColor: colors.primary }]}>
-      <View style={styles.logoContainer}>
+    <Appbar.Header style={{ elevation: 0, backgroundColor: colors.primary }}>
+      <View style={{ width: 60, height: 60, marginLeft: 8 }}>
         <Image
           source={require("../assets/images/logo-fyri.png")}
-          style={styles.logo}
+          style={{ width: "100%", height: "100%" }}
           resizeMode="contain"
         />
       </View>
       <Appbar.Content title={title} />
-      <Appbar.Action
-        icon={() => <Trash color="red" />}
-        onPress={clearObservations}
-      />
       <Connection />
     </Appbar.Header>
   );
 };
-
-const styles = StyleSheet.create({
-  header: {
-    elevation: 0,
-  },
-  logoContainer: {
-    width: 60,
-    height: 60,
-    marginLeft: 8,
-  },
-  logo: {
-    width: "100%",
-    height: "100%",
-  },
-});

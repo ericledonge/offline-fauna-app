@@ -1,7 +1,8 @@
 import { FlatList } from "react-native";
-import { useTheme, Card } from "react-native-paper";
+import { useTheme, Card, IconButton } from "react-native-paper";
+import { Trash } from "lucide-react-native";
 
-import { useGetObservations } from "@/store/selectors";
+import { useGetObservations, useClearObservations } from "@/store/selectors";
 import { ObservationCard } from "./ObservationCard";
 
 export const ObservationList = () => {
@@ -9,9 +10,20 @@ export const ObservationList = () => {
 
   const observations = useGetObservations();
 
+  const clearObservations = useClearObservations();
+
   return (
     <Card style={{ flex: 1, backgroundColor: theme.colors.surface }}>
-      <Card.Title title="Observations" titleVariant="titleMedium" />
+      <Card.Title
+        title="Observations"
+        titleVariant="titleMedium"
+        right={() => (
+          <IconButton
+            icon={() => <Trash color="red" size={20} />}
+            onPress={clearObservations}
+          />
+        )}
+      />
 
       <Card.Content>
         <FlatList
