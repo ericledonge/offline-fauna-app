@@ -23,3 +23,6 @@ export const useSetSyncError = () =>
 
 export const useClearObservations = () =>
   useOfflineObservationStore((state) => state.clearObservations);
+
+export const useGetUnsyncedObservations = () =>
+  useOfflineObservationStore((state) => state.getUnsyncedObservations);

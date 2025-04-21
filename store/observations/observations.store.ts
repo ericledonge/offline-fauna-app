@@ -10,6 +10,7 @@ export type ObservationSlice = {
   clearObservations: () => void;
   markSynced: (observationId: string) => void;
   setSyncError: (observationId: string, error: string) => void;
+  getUnsyncedObservations: () => OfflineObservation[];
 };
 
 export const createObservationSlice = (set: any, get: any) => ({
@@ -48,4 +49,6 @@ export const createObservationSlice = (set: any, get: any) => ({
         o.id === observationId ? { ...o, syncError: error } : o
       ),
     })),
+  getUnsyncedObservations: () =>
+    get().observations.filter((o: OfflineObservation) => !o.synced),
 });
