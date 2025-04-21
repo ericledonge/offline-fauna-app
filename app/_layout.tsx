@@ -8,6 +8,7 @@ import "react-native-reanimated";
 
 import { Providers } from "@/components/Providers";
 import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 import { useTheme } from "@/hooks/useTheme";
 
 export {
@@ -64,8 +65,10 @@ function RootLayoutNav() {
         }}
       >
         <Header />
-
-        <Slot />
+        <View style={{ flex: 1 }}>
+          <Slot />
+        </View>
+        <Footer />
       </View>
     );
   }
