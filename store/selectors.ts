@@ -1,28 +1,28 @@
-import { useOfflineObservationStore } from "./store";
+import { useObservationStore } from "./store";
 
-export const useGetOfflineObservations = () =>
-  useOfflineObservationStore((state) => state.observations);
+export const useGetObservations = () =>
+  useObservationStore((state) => state.observations);
 
 export const useAddObservations = () =>
-  useOfflineObservationStore((state) => state.addObservation);
+  useObservationStore((state) => state.addObservation);
 
 export const useRemoveObservations = () =>
-  useOfflineObservationStore((state) => state.removeObservation);
+  useObservationStore((state) => state.removeObservation);
 
 export const useGetFaunaList = () =>
-  useOfflineObservationStore((state) => state.faunaList);
+  useObservationStore((state) => state.faunaList);
 
 export const useSetFaunaList = () =>
-  useOfflineObservationStore((state) => state.setFaunaList);
+  useObservationStore((state) => state.setFaunaList);
 
 export const useMarkSynced = () =>
-  useOfflineObservationStore((state) => state.markSynced);
+  useObservationStore((state) => state.markSynced);
 
 export const useSetSyncError = () =>
-  useOfflineObservationStore((state) => state.setSyncError);
+  useObservationStore((state) => state.setSyncError);
 
 export const useClearObservations = () =>
-  useOfflineObservationStore((state) => state.clearObservations);
+  useObservationStore((state) => state.clearObservations);
 
 export const useGetUnsyncedObservations = () =>
-  useOfflineObservationStore((state) => state.getUnsyncedObservations);
+  useObservationStore((state) => state.getUnsyncedObservations);

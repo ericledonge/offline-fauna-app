@@ -1,28 +1,28 @@
 import { Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { OfflineObservation } from "@/models/offline-observation.model";
+import { Observation } from "@/models/observation.model";
 
 export type ObservationSlice = {
-  observations: OfflineObservation[];
-  addObservation: (observation: OfflineObservation) => void;
-  removeObservation: (observation: OfflineObservation) => void;
+  observations: Observation[];
+  addObservation: (observation: Observation) => void;
+  removeObservation: (observation: Observation) => void;
   clearObservations: () => void;
   markSynced: (observationId: string) => void;
   setSyncError: (observationId: string, error: string) => void;
-  getUnsyncedObservations: () => OfflineObservation[];
+  getUnsyncedObservations: () => Observation[];
 };
 
 export const createObservationSlice = (set: any, get: any) => ({
   observations: [],
-  addObservation: (observation: OfflineObservation) =>
+  addObservation: (observation: Observation) =>
     set((state: ObservationSlice) => ({
       observations: [...state.observations, observation],
     })),
-  removeObservation: (observation: OfflineObservation) =>
+  removeObservation: (observation: Observation) =>
     set((state: ObservationSlice) => ({
       observations: state.observations.filter(
-        (o: OfflineObservation) => o.id !== observation.id
+        (o: Observation) => o.id !== observation.id
       ),
     })),
   clearObservations: () => {
@@ -37,7 +37,7 @@ export const createObservationSlice = (set: any, get: any) => ({
   },
   markSynced: (observationId: string) =>
     set((state: ObservationSlice) => ({
-      observations: state.observations.map((o: OfflineObservation) =>
+      observations: state.observations.map((o: Observation) =>
         o.id === observationId
           ? { ...o, synced: true, syncError: undefined }
           : o
@@ -45,10 +45,10 @@ export const createObservationSlice = (set: any, get: any) => ({
     })),
   setSyncError: (observationId: string, error: string) =>
     set((state: ObservationSlice) => ({
-      observations: state.observations.map((o: OfflineObservation) =>
+      observations: state.observations.map((o: Observation) =>
         o.id === observationId ? { ...o, syncError: error } : o
       ),
     })),
   getUnsyncedObservations: () =>
-    get().observations.filter((o: OfflineObservation) => !o.synced),
+    get().observations.filter((o: Observation) => !o.synced),
 });

@@ -2,10 +2,10 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { OfflineObservationForm } from "@/components/OfflineObservationForm";
-import { OfflineObservationList } from "@/components/OfflineObservationList";
+import { ObservationForm } from "@/components/ObservationForm";
+import { ObservationList } from "@/components/ObservationList";
 import { useTheme } from "@/hooks/useTheme";
-import { useGetFauna } from "@/hooks/useGetFauna";
+import { useLoadFaunaData } from "@/hooks/useLoadFaunaData";
 import { useSyncObservations } from "@/hooks/useSyncObservations";
 
 export default function ObservationsScreen() {
@@ -14,15 +14,15 @@ export default function ObservationsScreen() {
   const styles = createStyles(theme, insets);
 
   // Load fauna data
-  useGetFauna();
+  useLoadFaunaData();
 
   // Enable automatic sync
   useSyncObservations();
 
   return (
     <View style={styles.container}>
-      <OfflineObservationForm />
-      <OfflineObservationList />
+      <ObservationForm />
+      <ObservationList />
     </View>
   );
 }
