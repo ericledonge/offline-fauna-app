@@ -2,7 +2,7 @@ import React from "react";
 import { Wifi, WifiOff } from "lucide-react-native";
 
 import { useTheme } from "@/hooks/useTheme";
-import { useNetworkStatus } from "@/hooks/use-network-status";
+import { useNetworkStatus } from "@/hooks/useGetNetworkStatus";
 
 export const Connection: React.FC = () => {
   const { colors } = useTheme();
