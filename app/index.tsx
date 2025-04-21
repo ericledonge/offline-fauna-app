@@ -23,6 +23,9 @@ export default function ObservationsScreen() {
         backgroundColor: theme.colors.background,
         gap: 16,
         padding: 16,
+        maxWidth: 800,
+        alignSelf: "center",
+        width: "100%",
       }}
     >
       <ObservationForm />
