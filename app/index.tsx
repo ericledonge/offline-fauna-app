@@ -6,7 +6,7 @@ import { ObservationForm } from "@/components/ObservationForm";
 import { ObservationList } from "@/components/ObservationList";
 import { useTheme } from "@/hooks/useTheme";
 import { useLoadFaunaData } from "@/hooks/useLoadFaunaData";
-// import { useSyncObservations } from "@/hooks/useSyncObservations";
+import { useSyncObservations } from "@/hooks/useSyncObservations";
 
 export default function ObservationsScreen() {
   const theme = useTheme();
@@ -17,7 +17,7 @@ export default function ObservationsScreen() {
   useLoadFaunaData();
 
   // Enable automatic sync
-  // useSyncObservations();
+  useSyncObservations();
 
   return (
     <View style={styles.container}>
