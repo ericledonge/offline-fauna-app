@@ -1,17 +1,9 @@
 import { ReactNode } from "react";
 import { PaperProvider } from "react-native-paper";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ApolloProvider } from "@apollo/client";
 
 import { theme } from "@/constants/theme";
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: 3,
-      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
-    },
-  },
-});
+import { apolloClient } from "@/services/api/apollo-client";
 
 type ProvidersProps = {
   children: ReactNode;
@@ -19,8 +11,8 @@ type ProvidersProps = {
 
 export function Providers({ children }: ProvidersProps) {
   return (
-    <QueryClientProvider client={queryClient}>
+    <ApolloProvider client={apolloClient}>
       <PaperProvider theme={theme}>{children}</PaperProvider>
-    </QueryClientProvider>
+    </ApolloProvider>
   );
 }
