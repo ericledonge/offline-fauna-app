@@ -1,7 +1,7 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { FlatList, View } from "react-native";
-import { useTheme, Card, IconButton, Menu } from "react-native-paper";
-import { Trash, Funnel } from "lucide-react-native";
+import { useTheme, Card, IconButton } from "react-native-paper";
+import { Trash } from "lucide-react-native";
 
 import {
   useGetObservations,
@@ -10,12 +10,12 @@ import {
   useGetUnsyncedObservations,
 } from "@/store/selectors";
 import { ObservationCard } from "./ObservationCard";
-import { SyncStatusIcon } from "./SyncStatusIcon";
+import { FilterButton } from "./FilterButton";
 
 export const ObservationList = () => {
   const theme = useTheme();
+
   const [filter, setFilter] = useState<"all" | "synced" | "unsynced">("all");
-  const [visible, setVisible] = useState(false);
 
   const observations = useGetObservations();
   const getSyncedObservations = useGetSyncedObservations();
@@ -36,43 +36,7 @@ export const ObservationList = () => {
         titleVariant="titleMedium"
         right={() => (
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Menu
-              visible={visible}
-              onDismiss={() => setVisible(false)}
-              anchor={
-                <IconButton
-                  icon={() => <Funnel size={20} />}
-                  onPress={() => setVisible(true)}
-                />
-              }
-            >
-              <Menu.Item
-                leadingIcon={() => <View style={{ width: 20, height: 20 }} />}
-                onPress={() => {
-                  setFilter("all");
-                  setVisible(false);
-                }}
-                title="All"
-              />
-              <Menu.Item
-                leadingIcon={() => <SyncStatusIcon isSynced={true} size={20} />}
-                onPress={() => {
-                  setFilter("synced");
-                  setVisible(false);
-                }}
-                title="Synced"
-              />
-              <Menu.Item
-                leadingIcon={() => (
-                  <SyncStatusIcon isSynced={false} size={20} />
-                )}
-                onPress={() => {
-                  setFilter("unsynced");
-                  setVisible(false);
-                }}
-                title="Unsynced"
-              />
-            </Menu>
+            <FilterButton value={filter} onChange={setFilter} />
             <IconButton
               icon={() => <Trash color="red" size={20} />}
               onPress={clearObservations}
