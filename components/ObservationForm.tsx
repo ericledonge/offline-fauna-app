@@ -34,7 +34,7 @@ export const ObservationForm = () => {
 
   return (
     <Card style={{ backgroundColor: theme.colors.surface }}>
-      <Card.Title title="Nouvelle Observation" />
+      <Card.Title title="Nouvelle Observation" titleVariant="titleMedium" />
 
       <Card.Content style={{ gap: 16 }}>
         <FaunaSelector
