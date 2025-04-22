@@ -12,26 +12,15 @@ A mobile application for managing fauna data offline.
 - Real-time synchronization
 - User-friendly interface
 
-## 🛠️ Installation
-
-```bash
-npm install
-npm start
-```
-
 ## 📸 Screenshots
 
-### App mobile avec une observation synchronisée et une en attente de synchronisation
+### App mobile
 
 ![Feature 1](./screenshots/1.png)
 
-### App web avec une observation synchronisée
+### App web
 
 ![Feature 2](./screenshots/2.png)
-
-### App mobile avec deux observations synchronisées
-
-![Feature 2](./screenshots/3.png)
 
 ## 🛠️ Tech Stack
 
@@ -39,7 +28,7 @@ npm start
 
 Repo: https://github.com/ericledonge/offline-fauna-app
 
-WebApp: https://offline-fauna-app--ncgcwtmhxu.expo.app/
+WebApp: https://offline-fauna-app.expo.app
 
 - **Frontend**: React Native with Expo
 - **State Management**: Zustand
@@ -61,3 +50,10 @@ WebApp: https://offline-fauna-backend.vercel.app/
 - **Type Safety**: TypeScript
 - **CI/CD**: GitHub Actions
 - **Hosting Web App**: Vercel
+
+## 🛠️ Installation
+
+```bash
+npm install
+npm start
+```
